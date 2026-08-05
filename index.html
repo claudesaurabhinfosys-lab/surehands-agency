@@ -122,6 +122,46 @@
 
   .pay-badge { display: inline-flex; align-items: center; justify-content: center; padding: 9px 18px; border-radius: 12px; border: 1px solid #E4E8EF; background: #fff; font-size: 13px; font-weight: 600; color: #1B2230; transition: border-color .25s, box-shadow .25s, transform .25s; }
   .pay-badge:hover { border-color: #1D3461; box-shadow: 0 4px 12px -6px rgba(29,52,97,.2); transform: translateY(-2px); }
+
+  /* Blog Section */
+  .blog-card {
+    background: #fff; border-radius: 28px;
+    border: 1px solid #E4E8EF;
+    box-shadow: 0 1px 3px rgba(27,34,48,.02), 0 24px 60px -40px rgba(27,34,48,.12);
+    overflow: hidden;
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .blog-card:hover { transform: translateY(-4px); box-shadow: 0 30px 60px -30px rgba(29,52,97,.18); border-color: rgba(92,143,191,.25); }
+  .blog-card__image-wrap { position: relative; padding-top: 62.5%; overflow: hidden; background: #E4E8EF; }
+  .blog-card__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+  .blog-card:hover .blog-card__image { transform: scale(1.04); }
+  .blog-card__body { padding: 24px 26px 28px; display: flex; flex-direction: column; flex: 1; }
+  .blog-card__meta { display: flex; align-items: center; gap: 14px; font-size: 12px; color: #8B95A8; margin-bottom: 12px; }
+  .blog-card__meta-dot { width: 3px; height: 3px; border-radius: 50%; background: #8B95A8; }
+  .blog-card__title { font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.35rem; line-height: 1.25; color: #1B2230; margin-bottom: 10px; }
+  .blog-card__desc { font-size: 14px; line-height: 1.6; color: #4D5668; margin-bottom: 20px; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .blog-card__footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid #E4E8EF; }
+  .blog-card__author { font-size: 13px; color: #4D5668; font-weight: 500; }
+  .blog-card__readmore {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; color: #1D3461;
+    text-decoration: none; transition: gap .25s ease;
+  }
+  .blog-card__readmore:hover { gap: 10px; }
+  .blog-card__readmore svg { transition: transform .25s ease; }
+  .blog-card__readmore:hover svg { transform: translateX(2px); }
+
+  /* Skeleton */
+  .blog-skeleton-card { background: #fff; border-radius: 28px; border: 1px solid #E4E8EF; overflow: hidden; }
+  .blog-skeleton-image { padding-top: 62.5%; background: linear-gradient(90deg, #E4E8EF 25%, #F5F1EA 50%, #E4E8EF 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+  .blog-skeleton-body { padding: 24px 26px 28px; }
+  .blog-skeleton-line { height: 12px; border-radius: 6px; background: linear-gradient(90deg, #E4E8EF 25%, #F5F1EA 50%, #E4E8EF 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; margin-bottom: 12px; }
+  .blog-skeleton-line--short { width: 30%; height: 10px; }
+  .blog-skeleton-line--title { width: 85%; height: 18px; margin-bottom: 16px; }
+  .blog-skeleton-line--text { width: 100%; }
+  .blog-skeleton-line--text:last-child { width: 70%; margin-bottom: 0; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 </style>
 </head>
 <body>
@@ -150,13 +190,14 @@
         </div>
       </div>
     </a>
-    <nav class="hidden md:flex items-center gap-7 text-sm text-slate">
-      <a href="#about"    class="ulink hover:text-ink transition-colors">About</a>
-      <a href="#services" class="ulink hover:text-ink transition-colors">Services</a>
-      <a href="#pricing"  class="ulink hover:text-ink transition-colors">Pricing</a>
-      <a href="#process"  class="ulink hover:text-ink transition-colors">Process</a>
-      <a href="#faq"      class="ulink hover:text-ink transition-colors">FAQ</a>
-    </nav>
+      <nav class="hidden md:flex items-center gap-7 text-sm text-slate">
+        <a href="#about"    class="ulink hover:text-ink transition-colors">About</a>
+        <a href="#services" class="ulink hover:text-ink transition-colors">Services</a>
+        <a href="#pricing"  class="ulink hover:text-ink transition-colors">Pricing</a>
+        <a href="#process"  class="ulink hover:text-ink transition-colors">Process</a>
+        <a href="#faq"      class="ulink hover:text-ink transition-colors">FAQ</a>
+        <a href="blog.html" class="ulink hover:text-ink transition-colors">Blog</a>
+      </nav>
     <a href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20find%20a%20helper%20for%20my%20family." class="btn-wa !py-2.5 !px-5 !text-sm">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.05 4.91A10 10 0 0 0 4.9 19.06L4 23l4.07-1.06A10 10 0 1 0 19.05 4.91Zm-7.05 16a8 8 0 0 1-4.07-1.12l-.29-.17-2.4.63.64-2.34-.19-.3A8 8 0 1 1 12 20.91Zm4.4-5.96c-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.36.1-.48.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"/></svg>
       WhatsApp Us
@@ -765,6 +806,61 @@
   </div>
 </section>
 
+<!-- ===== BLOG ===== -->
+<section id="blog" class="py-24 md:py-32 bg-cream/60 border-y border-line">
+  <div class="max-w-7xl mx-auto px-5 md:px-10">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+      <div class="reveal max-w-2xl">
+        <span class="eyebrow"><span class="dot"></span> From Our Blog</span>
+        <h2 style="font-family:'Fraunces',serif;font-weight:300" class="text-4xl md:text-6xl leading-[1.05] mt-5">
+          Insights &amp; stories<br/>
+          <span class="italic text-deep">for your family.</span>
+        </h2>
+      </div>
+      <a href="blog.html" class="reveal d1 ulink text-ink font-semibold hover:text-deep transition-colors self-start md:self-end">View all articles →</a>
+    </div>
+
+    <div id="blog-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Blog cards injected by JS -->
+    </div>
+
+    <div id="blog-skeleton" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="blog-skeleton-card">
+        <div class="blog-skeleton-image"></div>
+        <div class="blog-skeleton-body">
+          <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+        </div>
+      </div>
+      <div class="blog-skeleton-card">
+        <div class="blog-skeleton-image"></div>
+        <div class="blog-skeleton-body">
+          <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+        </div>
+      </div>
+      <div class="blog-skeleton-card">
+        <div class="blog-skeleton-image"></div>
+        <div class="blog-skeleton-body">
+          <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+          <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="blog-empty" class="hidden text-center py-16">
+      <div style="font-family:'Fraunces',serif" class="text-2xl text-ink">No articles yet</div>
+      <p class="text-slate mt-2">Check back soon for new insights and stories.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ===== FINAL CTA ===== -->
 <section class="py-24 md:py-32">
   <div class="max-w-5xl mx-auto px-5 md:px-10">
@@ -815,6 +911,7 @@
           <li><a href="#pricing"  class="hover:text-white transition-colors">Pricing</a></li>
           <li><a href="#process"  class="hover:text-white transition-colors">Our Process</a></li>
           <li><a href="#faq"      class="hover:text-white transition-colors">FAQ</a></li>
+          <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
         </ul>
       </div>
       <div class="md:col-span-4">
@@ -856,6 +953,11 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<script src="js/blogs.js"></script>
+<script>
+  if (typeof initBlogSection === 'function') initBlogSection();
 </script>
 </body>
 </html>
