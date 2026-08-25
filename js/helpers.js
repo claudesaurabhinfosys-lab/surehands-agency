@@ -1,5 +1,5 @@
 (function () {
-  const HELPERS_Head = "";
+  const HELPERS_Head = "phs_378abb7a8432abe5af13c4c3d7c39dfe8809e987d5791e81";
   const LIST_API_URL =
     "https://meow-service-test.flutterclone.com/api/public/helpers/list?nopaginate=1";
   const INFO_API_URL =
