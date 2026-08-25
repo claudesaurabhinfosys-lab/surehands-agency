@@ -1,11 +1,10 @@
 (function () {
   const HELPERS_Head = "phs_378abb7a8432abe5af13c4c3d7c39dfe8809e987d5791e81";
   const LIST_API_URL =
-    "https://meow-service-test.flutterclone.com/api/public/helpers/list?nopaginate=1&status=available";
+    "https://meow-service-test.flutterclone.com/api/public/helpers/list";
   const INFO_API_URL =
     "https://meow-service-test.flutterclone.com/api/public/helpers/info/";
-
-  let cachedHelpers = null;
+  const HELPERS_PER_PAGE = 8;
 
   function authHeaders() {
     return { "X-Helpers-Secret": HELPERS_Head, Accept: "application/json" };
@@ -19,16 +18,22 @@
     return [];
   }
 
-  async function fetchHelpersList() {
-    if (cachedHelpers) return cachedHelpers;
+  async function fetchHelpersPage(page) {
+    const url = `${LIST_API_URL}?status=available&per_page=${HELPERS_PER_PAGE}&page=${page}`;
     try {
-      const res = await fetch(LIST_API_URL, { headers: authHeaders() });
+      const res = await fetch(url, { headers: authHeaders() });
       if (!res.ok) throw new Error("Failed to fetch helpers");
-      cachedHelpers = normalizeList(await res.json());
-      return cachedHelpers;
+      const json = await res.json();
+      const paginator = json && json.data ? json.data : json;
+      return {
+        items: normalizeList(paginator),
+        currentPage: paginator?.current_page || page,
+        lastPage: paginator?.last_page || page,
+        hasMore: Boolean(paginator?.next_page_url),
+      };
     } catch (err) {
       console.log("HELPERS LIST GET ERROR /", err);
-      return [];
+      return { items: [], currentPage: page, lastPage: page, hasMore: false };
     }
   }
 
@@ -62,8 +67,15 @@
     return "default";
   }
 
-  function formatLabel(str) {
-    return (str || "").replace(/_/g, " ");
+  function formatLabel(val) {
+    return String(val ?? "").replace(/_/g, " ");
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString("en-SG", { year: "numeric", month: "short" });
   }
 
   function getPhotoUrl(helper) {
@@ -96,9 +108,6 @@
   };
 
   function createHelperCard(helper) {
-    const slide = document.createElement("div");
-    slide.className = "swiper-slide";
-
     const card = document.createElement("a");
     card.href = `helper-details.html?id=${encodeURIComponent(helper.id)}`;
     card.className = "helper-card";
@@ -142,8 +151,7 @@
         </div>
       </div>
     `;
-    slide.appendChild(card);
-    return slide;
+    return card;
   }
 
   function revealCards(selector) {
@@ -165,39 +173,47 @@
     const grid = document.getElementById("helpers-grid");
     const skeleton = document.getElementById("helpers-skeleton");
     const empty = document.getElementById("helpers-empty");
+    const loadMoreBtn = document.getElementById("helpers-load-more");
     if (!grid) return;
 
-    const helpers = await fetchHelpersList();
+    let page = 1;
+
+    function setLoadMoreState(isLoading) {
+      if (!loadMoreBtn) return;
+      loadMoreBtn.disabled = isLoading;
+      loadMoreBtn.classList.toggle("is-loading", isLoading);
+    }
+
+    async function loadPage(targetPage) {
+      const { items, currentPage, hasMore } = await fetchHelpersPage(targetPage);
+
+      items.forEach((helper) => {
+        grid.appendChild(createHelperCard(helper));
+      });
+
+      page = currentPage;
+
+      if (loadMoreBtn) {
+        loadMoreBtn.classList.toggle("hidden", !hasMore);
+      }
+
+      return items.length;
+    }
+
+    const firstBatchCount = await loadPage(1);
 
     if (skeleton) skeleton.style.display = "none";
 
-    if (!helpers.length) {
+    if (!firstBatchCount) {
       if (empty) empty.classList.remove("hidden");
       return;
     }
 
-    helpers.forEach((helper) => {
-      grid.appendChild(createHelperCard(helper));
-    });
-
-    const swiperEl = grid.closest(".swiper");
-    if (swiperEl && typeof Swiper !== "undefined") {
-      new Swiper(swiperEl, {
-        slidesPerView: 1.15,
-        spaceBetween: 16,
-        centeredSlides: true,
-        pagination: {
-          el: swiperEl.querySelector(".swiper-pagination"),
-          clickable: true,
-        },
-        navigation: {
-          nextEl: swiperEl.querySelector(".swiper-button-next"),
-          prevEl: swiperEl.querySelector(".swiper-button-prev"),
-        },
-        breakpoints: {
-          640: { slidesPerView: 2.15, spaceBetween: 20, centeredSlides: false },
-          1024: { slidesPerView: 3, spaceBetween: 24, centeredSlides: false },
-        },
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener("click", async () => {
+        setLoadMoreState(true);
+        await loadPage(page + 1);
+        setLoadMoreState(false);
       });
     }
   }
@@ -205,42 +221,97 @@
   const FACT_FIELDS = [
     ["nationality", "Nationality"],
     ["gender", "Gender"],
+    ["age", "Age"],
     ["language", "Language"],
-    ["religion", "Religion"],
-    // ["marital_status", "Marital Status"],
     ["education_level", "Education"],
+    ["place_of_birth", "Place of Birth"],
     ["rest_day_preference", "Rest Day Preference"],
   ];
 
+  function fact(label, value) {
+    return `
+      <div class="helper-detail__fact">
+        <div class="helper-detail__fact-label">${label}</div>
+        <div class="helper-detail__fact-value">${value}</div>
+      </div>
+    `;
+  }
+
   function buildFactsHTML(helper) {
-    const facts = FACT_FIELDS.filter(([key]) => helper[key]).map(
-      ([key, label]) => `
-        <div class="helper-detail__fact">
-          <div class="helper-detail__fact-label">${label}</div>
-          <div class="helper-detail__fact-value">${formatLabel(helper[key])}</div>
-        </div>
-      `,
+    const facts = FACT_FIELDS.filter(([key]) => helper[key]).map(([key, label]) =>
+      fact(label, key === "age" ? `${helper.age} yrs` : formatLabel(helper[key])),
     );
 
     if (typeof helper.years_experience === "number") {
-      facts.push(`
-        <div class="helper-detail__fact">
-          <div class="helper-detail__fact-label">Experience</div>
-          <div class="helper-detail__fact-value">${helper.years_experience} year${helper.years_experience === 1 ? "" : "s"}</div>
-        </div>
-      `);
+      facts.push(
+        fact(
+          "Experience",
+          `${helper.years_experience} year${helper.years_experience === 1 ? "" : "s"}`,
+        ),
+      );
     }
 
     if (helper.has_singapore_experience) {
-      facts.push(`
-        <div class="helper-detail__fact">
-          <div class="helper-detail__fact-label">Singapore Experience</div>
-          <div class="helper-detail__fact-value">Yes</div>
-        </div>
-      `);
+      facts.push(fact("Singapore Experience", "Yes"));
     }
 
     return facts.join("");
+  }
+
+  const ABILITY_FIELDS = [
+    ["able_to_care_pets", "Cares for pets"],
+    ["able_to_garden", "Gardening"],
+    ["able_to_sew", "Sewing"],
+    ["willing_wash_car", "Willing to wash car"],
+    ["willing_work_with_another_helper", "Works with another helper"],
+  ];
+
+  const FOOD_FIELDS = [
+    ["food_no_pork", "Avoids pork"],
+    ["food_no_beef", "Avoids beef"],
+    ["able_to_handle_pork", "Can cook pork"],
+    ["able_to_handle_beef", "Can cook beef"],
+  ];
+
+  function boolTag(label, value) {
+    return `<span class="helper-detail__tag helper-detail__tag--${value ? "yes" : "no"}">${label}</span>`;
+  }
+
+  function buildAbilitiesHTML(helper) {
+    const fields = ABILITY_FIELDS.filter(
+      ([key]) => helper[key] !== undefined && helper[key] !== null,
+    );
+    if (!fields.length) return "";
+
+    const tags = fields.map(([key, label]) => boolTag(label, helper[key]));
+
+    return `
+      <div class="helper-detail__section">
+        <h2 class="helper-detail__section-title">Additional Abilities</h2>
+        <div class="helper-detail__tags">${tags.join("")}</div>
+      </div>
+    `;
+  }
+
+  function buildDietaryHTML(helper) {
+    const fields = FOOD_FIELDS.filter(
+      ([key]) => helper[key] !== undefined && helper[key] !== null,
+    );
+    const tags = fields.map(([key, label]) => boolTag(label, helper[key]));
+
+    const notes = [helper.dietary_restrictions, helper.food_handling_other].filter(
+      Boolean,
+    );
+
+    if (!tags.length && !notes.length) return "";
+
+    return `
+      <div class="helper-detail__section">
+        <h2 class="helper-detail__section-title">Dietary &amp; Food Handling</h2>
+        ${tags.length ? `<div class="helper-detail__tags mb-4">${tags.join("")}</div>` : ""}
+        ${notes.map((n) => `<p class="helper-detail__note">${n}</p>`).join("")}
+      </div>
+    `;
   }
 
   function buildAssessmentsHTML(assessments) {
@@ -274,6 +345,80 @@
             <tbody>${rows}</tbody>
           </table>
         </div>
+      </div>
+    `;
+  }
+
+  function buildEmploymentHistoryHTML(histories) {
+    if (!histories || !histories.length) return "";
+
+    const sorted = [...histories].sort(
+      (a, b) => new Date(b.from_date || 0) - new Date(a.from_date || 0),
+    );
+
+    const items = sorted
+      .map((h) => {
+        const dateRange = [formatDate(h.from_date), formatDate(h.to_date) || "Present"]
+          .filter(Boolean)
+          .join(" – ");
+        const meta = [
+          h.household_size ? `${h.household_size} in household` : "",
+          h.housing_type ? formatLabel(h.housing_type) : "",
+        ].filter(Boolean);
+
+        return `
+          <div class="helper-detail__timeline-item">
+            <div class="helper-detail__timeline-head">
+              <h3 class="helper-detail__timeline-title">${formatLabel(h.country) || "Overseas"}${h.employer ? ` · ${formatLabel(h.employer)}` : ""}</h3>
+              <span class="helper-detail__timeline-date">${dateRange}</span>
+            </div>
+            ${meta.length ? `<div class="helper-detail__timeline-meta">${meta.join(" · ")}</div>` : ""}
+            ${h.work_duties ? `<p class="helper-detail__timeline-duties">${formatLabel(h.work_duties)}</p>` : ""}
+          </div>
+        `;
+      })
+      .join("");
+
+    return `
+      <div class="helper-detail__section">
+        <h2 class="helper-detail__section-title">Work Experience</h2>
+        <div class="helper-detail__timeline">${items}</div>
+      </div>
+    `;
+  }
+
+  function buildVideoInterviewsHTML(videos) {
+    if (!videos || !videos.length) return "";
+
+    const sorted = [...videos].sort(
+      (a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0),
+    );
+
+    const cards = sorted
+      .map(
+        (v) => `
+        <div class="helper-detail__video-card">
+          <video
+            controls
+            preload="none"
+            ${v.thumbnail_url ? `poster="${v.thumbnail_url}"` : ""}
+            class="helper-detail__video"
+          >
+            <source src="${v.video_url}" />
+          </video>
+          <div class="helper-detail__video-caption">
+            <span>${v.title || "Interview"}</span>
+            ${v.interviewed_at ? `<span class="helper-detail__video-date">${formatDate(v.interviewed_at)}</span>` : ""}
+          </div>
+        </div>
+      `,
+      )
+      .join("");
+
+    return `
+      <div class="helper-detail__section">
+        <h2 class="helper-detail__section-title">Video Interview</h2>
+        <div class="helper-detail__video-grid">${cards}</div>
       </div>
     `;
   }
@@ -343,6 +488,10 @@
       </div>
 
       ${buildAssessmentsHTML(helper.skill_assessments)}
+      ${buildAbilitiesHTML(helper)}
+      ${buildDietaryHTML(helper)}
+      ${buildEmploymentHistoryHTML(helper.employment_histories)}
+      ${buildVideoInterviewsHTML(helper.video_interviews)}
     `;
   }
 

@@ -96,6 +96,32 @@
     .helper-detail__table td { padding: 12px 16px; border-top: 1px solid #E4E8EF; color: #1B2230; }
     .helper-detail__table-center { text-align: center; }
 
+    .helper-detail__tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .helper-detail__tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    }
+    .helper-detail__tag--yes { background: rgba(37,211,102,.1); color: #1c9550; border: 1px solid rgba(37,211,102,.25); }
+    .helper-detail__tag--yes::before { content: '✓'; font-weight: 700; }
+    .helper-detail__tag--no { background: rgba(139,149,168,.1); color: #8B95A8; border: 1px solid rgba(139,149,168,.25); }
+    .helper-detail__tag--no::before { content: '✕'; font-weight: 700; }
+    .helper-detail__note { font-size: 14px; line-height: 1.6; color: #4D5668; margin-top: 4px; }
+    .helper-detail__note + .helper-detail__note { margin-top: 8px; }
+
+    .helper-detail__timeline { display: flex; flex-direction: column; gap: 16px; }
+    .helper-detail__timeline-item { padding: 20px 22px; border-radius: 16px; background: #fff; border: 1px solid #E4E8EF; }
+    .helper-detail__timeline-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+    .helper-detail__timeline-title { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; color: #1B2230; text-transform: capitalize; }
+    .helper-detail__timeline-date { font-size: 12.5px; font-weight: 600; color: #C9A66B; white-space: nowrap; }
+    .helper-detail__timeline-meta { font-size: 12.5px; color: #8B95A8; margin-top: 4px; text-transform: capitalize; }
+    .helper-detail__timeline-duties { font-size: 14px; line-height: 1.65; color: #4D5668; margin-top: 12px; white-space: pre-line; }
+
+    .helper-detail__video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .helper-detail__video-card { border-radius: 16px; overflow: hidden; border: 1px solid #E4E8EF; background: #fff; }
+    .helper-detail__video { display: block; width: 100%; aspect-ratio: 16/9; background: #1B2230; }
+    .helper-detail__video-caption { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #1B2230; }
+    .helper-detail__video-date { font-size: 12px; font-weight: 500; color: #8B95A8; }
+
     /* Skeleton */
     .helper-detail-skeleton { padding: 2rem 0; }
     .helper-detail-skeleton__row { display: grid; gap: 40px; margin-bottom: 40px; }

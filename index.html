@@ -20,8 +20,6 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
     <script>
       tailwind.config = {
         theme: {
@@ -559,34 +557,43 @@
         gap: 10px;
       }
 
-      /* Helpers Swiper */
-      .helpers-swiper { padding: 0 8px 48px; overflow: visible; }
-      .helpers-swiper .swiper-slide { transition: transform .35s ease; }
-      .helpers-swiper .swiper-slide-active .helper-card { transform: none; }
-      .helpers-swiper .swiper-button-next,
-      .helpers-swiper .swiper-button-prev {
-        width: 44px; height: 44px; border-radius: 50%;
-        background: #fff; box-shadow: 0 4px 16px rgba(27,34,48,.12);
-        color: #1D3461; transition: background .2s ease, box-shadow .2s ease;
+      /* Helpers Grid */
+      .helpers-load-more {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 13px 28px;
+        border-radius: 999px;
+        background: #1d3461;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        box-shadow: 0 12px 30px -12px rgba(29, 52, 97, 0.45);
       }
-      .helpers-swiper .swiper-button-next:hover,
-      .helpers-swiper .swiper-button-prev:hover {
-        background: #1D3461; color: #fff;
-        box-shadow: 0 8px 24px rgba(29,52,97,.25);
+      .helpers-load-more:hover:not(:disabled) {
+        background: #16264a;
+        transform: translateY(-2px);
       }
-      .helpers-swiper .swiper-button-next::after,
-      .helpers-swiper .swiper-button-prev::after { font-size: 16px; font-weight: 700; }
-      .helpers-swiper .swiper-pagination-bullet {
-        width: 8px; height: 8px; background: #C9A66B; opacity: .35;
-        transition: opacity .3s ease, width .3s ease;
+      .helpers-load-more:disabled {
+        opacity: 0.6;
+        cursor: default;
+        transform: none;
       }
-      .helpers-swiper .swiper-pagination-bullet-active {
-        opacity: 1; width: 24px; border-radius: 4px;
+      .helpers-load-more__spinner {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-top-color: #fff;
+        animation: helpers-spin 0.7s linear infinite;
+        display: none;
       }
-      @media (max-width: 768px) {
-        .helpers-swiper .swiper-button-next,
-        .helpers-swiper .swiper-button-prev { display: none; }
-      }
+      .helpers-load-more.is-loading .helpers-load-more__spinner { display: inline-block; }
+      @keyframes helpers-spin { to { transform: rotate(360deg); } }
 
       /* Skeleton */
       .blog-skeleton-card {
@@ -1303,51 +1310,60 @@
           </p>
         </div>
 
-        <div class="helpers-swiper swiper">
-          <div id="helpers-grid" class="swiper-wrapper">
-            <!-- Helper cards injected by JS -->
-          </div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+        <div
+          id="helpers-grid"
+          class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          <!-- Helper cards injected by JS -->
         </div>
 
         <div
           id="helpers-skeleton"
-          class="helpers-swiper swiper"
+          class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="blog-skeleton-card">
-                <div class="blog-skeleton-image"></div>
-                <div class="blog-skeleton-body">
-                  <div class="blog-skeleton-line blog-skeleton-line--short"></div>
-                  <div class="blog-skeleton-line blog-skeleton-line--title"></div>
-                  <div class="blog-skeleton-line blog-skeleton-line--text"></div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="blog-skeleton-card">
-                <div class="blog-skeleton-image"></div>
-                <div class="blog-skeleton-body">
-                  <div class="blog-skeleton-line blog-skeleton-line--short"></div>
-                  <div class="blog-skeleton-line blog-skeleton-line--title"></div>
-                  <div class="blog-skeleton-line blog-skeleton-line--text"></div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="blog-skeleton-card">
-                <div class="blog-skeleton-image"></div>
-                <div class="blog-skeleton-body">
-                  <div class="blog-skeleton-line blog-skeleton-line--short"></div>
-                  <div class="blog-skeleton-line blog-skeleton-line--title"></div>
-                  <div class="blog-skeleton-line blog-skeleton-line--text"></div>
-                </div>
-              </div>
+          <div class="blog-skeleton-card">
+            <div class="blog-skeleton-image"></div>
+            <div class="blog-skeleton-body">
+              <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+              <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+              <div class="blog-skeleton-line blog-skeleton-line--text"></div>
             </div>
           </div>
+          <div class="blog-skeleton-card">
+            <div class="blog-skeleton-image"></div>
+            <div class="blog-skeleton-body">
+              <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+              <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+              <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+            </div>
+          </div>
+          <div class="blog-skeleton-card">
+            <div class="blog-skeleton-image"></div>
+            <div class="blog-skeleton-body">
+              <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+              <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+              <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+            </div>
+          </div>
+          <div class="blog-skeleton-card">
+            <div class="blog-skeleton-image"></div>
+            <div class="blog-skeleton-body">
+              <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+              <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+              <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-12">
+          <button
+            type="button"
+            id="helpers-load-more"
+            class="helpers-load-more hidden"
+          >
+            <span class="helpers-load-more__spinner"></span>
+            <span class="helpers-load-more__label">Load More</span>
+          </button>
         </div>
 
         <div id="helpers-empty" class="hidden text-center py-16">
@@ -2697,7 +2713,6 @@
       if (typeof initBlogSection === "function") initBlogSection();
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="js/helpers.js"></script>
     <script>
       if (typeof initHelpersSection === "function") initHelpersSection();
