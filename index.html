@@ -20,6 +20,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <script>
       tailwind.config = {
@@ -422,6 +423,171 @@
         transform: translateX(2px);
       }
 
+      /* Helper Cards */
+      .helper-card {
+        display: block;
+        background: #fff;
+        border-radius: 28px;
+        border: 1px solid #e4e8ef;
+        box-shadow:
+          0 1px 3px rgba(27, 34, 48, 0.02),
+          0 24px 60px -40px rgba(27, 34, 48, 0.12);
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease,
+          border-color 0.35s ease;
+      }
+      .helper-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 30px 60px -30px rgba(29, 52, 97, 0.18);
+        border-color: rgba(92, 143, 191, 0.25);
+      }
+      .helper-card__photo-wrap {
+        position: relative;
+        padding-top: 100%;
+        overflow: hidden;
+        background: #e4e8ef;
+      }
+      .helper-card__photo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: transform 0.5s ease;
+      }
+      .helper-card:hover .helper-card__photo {
+        transform: scale(1.04);
+      }
+      .helper-card__initials {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Fraunces", serif;
+        font-size: 2.75rem;
+        color: #1d3461;
+        opacity: 0.45;
+        background: linear-gradient(135deg, #dce8f3, #f5f1ea);
+      }
+      .helper-card__status {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        padding: 5px 12px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-transform: capitalize;
+      }
+      .helper-card__status--available {
+        background: rgba(37, 211, 102, 0.14);
+        color: #1c9550;
+        border: 1px solid rgba(37, 211, 102, 0.3);
+      }
+      .helper-card__status--assigned {
+        background: rgba(201, 166, 107, 0.18);
+        color: #8a6a2e;
+        border: 1px solid rgba(201, 166, 107, 0.32);
+      }
+      .helper-card__status--default {
+        background: rgba(92, 143, 191, 0.14);
+        color: #1d3461;
+        border: 1px solid rgba(92, 143, 191, 0.28);
+      }
+      .helper-card__body {
+        padding: 22px 24px 24px;
+      }
+      .helper-card__meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 12px;
+        color: #8b95a8;
+        margin-bottom: 8px;
+        text-transform: capitalize;
+      }
+      .helper-card__meta-dot {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: #8b95a8;
+      }
+      .helper-card__name {
+        font-family: "Fraunces", serif;
+        font-weight: 400;
+        font-size: 1.3rem;
+        color: #1b2230;
+        margin-bottom: 8px;
+      }
+      .helper-card__skills {
+        font-size: 13px;
+        line-height: 1.55;
+        color: #4d5668;
+        margin-bottom: 18px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .helper-card__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 14px;
+        border-top: 1px solid #e4e8ef;
+        font-size: 12.5px;
+      }
+      .helper-card__exp {
+        color: #4d5668;
+        font-weight: 500;
+      }
+      .helper-card__view {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+        color: #1d3461;
+        transition: gap 0.25s ease;
+      }
+      .helper-card:hover .helper-card__view {
+        gap: 10px;
+      }
+
+      /* Helpers Swiper */
+      .helpers-swiper { padding: 0 8px 48px; overflow: visible; }
+      .helpers-swiper .swiper-slide { transition: transform .35s ease; }
+      .helpers-swiper .swiper-slide-active .helper-card { transform: none; }
+      .helpers-swiper .swiper-button-next,
+      .helpers-swiper .swiper-button-prev {
+        width: 44px; height: 44px; border-radius: 50%;
+        background: #fff; box-shadow: 0 4px 16px rgba(27,34,48,.12);
+        color: #1D3461; transition: background .2s ease, box-shadow .2s ease;
+      }
+      .helpers-swiper .swiper-button-next:hover,
+      .helpers-swiper .swiper-button-prev:hover {
+        background: #1D3461; color: #fff;
+        box-shadow: 0 8px 24px rgba(29,52,97,.25);
+      }
+      .helpers-swiper .swiper-button-next::after,
+      .helpers-swiper .swiper-button-prev::after { font-size: 16px; font-weight: 700; }
+      .helpers-swiper .swiper-pagination-bullet {
+        width: 8px; height: 8px; background: #C9A66B; opacity: .35;
+        transition: opacity .3s ease, width .3s ease;
+      }
+      .helpers-swiper .swiper-pagination-bullet-active {
+        opacity: 1; width: 24px; border-radius: 4px;
+      }
+      @media (max-width: 768px) {
+        .helpers-swiper .swiper-button-next,
+        .helpers-swiper .swiper-button-prev { display: none; }
+      }
+
       /* Skeleton */
       .blog-skeleton-card {
         background: #fff;
@@ -580,6 +746,9 @@
           >
           <a href="#services" class="ulink hover:text-ink transition-colors"
             >Services</a
+          >
+          <a href="#helpers" class="ulink hover:text-ink transition-colors"
+            >Helpers</a
           >
           <a href="#pricing" class="ulink hover:text-ink transition-colors"
             >Pricing</a
@@ -1108,6 +1277,90 @@
               we'll always be honest when a candidate isn't quite right.
             </p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AVAILABLE HELPERS ===== -->
+    <section id="helpers" class="py-24 md:py-32 bg-cream/60 border-y border-line">
+      <div class="max-w-7xl mx-auto px-5 md:px-10">
+        <div
+          class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14"
+        >
+          <div class="reveal max-w-2xl">
+            <span class="eyebrow"><span class="dot"></span> Meet Our Helpers</span>
+            <h2
+              style="font-family: &quot;Fraunces&quot;, serif; font-weight: 300"
+              class="text-4xl md:text-6xl leading-[1.05] mt-5"
+            >
+              Helpers ready<br />
+              <span class="italic text-deep">to join your family.</span>
+            </h2>
+          </div>
+          <p class="reveal d1 max-w-sm text-slate leading-relaxed">
+            A glimpse of the helpers in our pool right now — each one
+            interviewed, vetted, and ready to be matched.
+          </p>
+        </div>
+
+        <div class="helpers-swiper swiper">
+          <div id="helpers-grid" class="swiper-wrapper">
+            <!-- Helper cards injected by JS -->
+          </div>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+
+        <div
+          id="helpers-skeleton"
+          class="helpers-swiper swiper"
+        >
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="blog-skeleton-card">
+                <div class="blog-skeleton-image"></div>
+                <div class="blog-skeleton-body">
+                  <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+                  <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+                  <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="blog-skeleton-card">
+                <div class="blog-skeleton-image"></div>
+                <div class="blog-skeleton-body">
+                  <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+                  <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+                  <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="blog-skeleton-card">
+                <div class="blog-skeleton-image"></div>
+                <div class="blog-skeleton-body">
+                  <div class="blog-skeleton-line blog-skeleton-line--short"></div>
+                  <div class="blog-skeleton-line blog-skeleton-line--title"></div>
+                  <div class="blog-skeleton-line blog-skeleton-line--text"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="helpers-empty" class="hidden text-center py-16">
+          <div
+            style="font-family: &quot;Fraunces&quot;, serif"
+            class="text-2xl text-ink"
+          >
+            No helpers available right now
+          </div>
+          <p class="text-slate mt-2">
+            Check back soon, or message us on WhatsApp for the latest
+            availability.
+          </p>
         </div>
       </div>
     </section>
@@ -2308,6 +2561,11 @@
                 >
               </li>
               <li>
+                <a href="#helpers" class="hover:text-white transition-colors"
+                  >Helpers</a
+                >
+              </li>
+              <li>
                 <a href="#pricing" class="hover:text-white transition-colors"
                   >Pricing</a
                 >
@@ -2437,6 +2695,12 @@
     <script src="js/blogs.js"></script>
     <script>
       if (typeof initBlogSection === "function") initBlogSection();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/helpers.js"></script>
+    <script>
+      if (typeof initHelpersSection === "function") initHelpersSection();
     </script>
   </body>
 </html>
