@@ -273,17 +273,15 @@
     ["able_to_handle_beef", "Can cook beef"],
   ];
 
-  function boolTag(label, value) {
-    return `<span class="helper-detail__tag helper-detail__tag--${value ? "yes" : "no"}">${label}</span>`;
+  function boolTag(label) {
+    return `<span class="helper-detail__tag helper-detail__tag--yes">${label}</span>`;
   }
 
   function buildAbilitiesHTML(helper) {
-    const fields = ABILITY_FIELDS.filter(
-      ([key]) => helper[key] !== undefined && helper[key] !== null,
-    );
+    const fields = ABILITY_FIELDS.filter(([key]) => helper[key]);
     if (!fields.length) return "";
 
-    const tags = fields.map(([key, label]) => boolTag(label, helper[key]));
+    const tags = fields.map(([, label]) => boolTag(label));
 
     return `
       <div class="helper-detail__section">
@@ -294,10 +292,8 @@
   }
 
   function buildDietaryHTML(helper) {
-    const fields = FOOD_FIELDS.filter(
-      ([key]) => helper[key] !== undefined && helper[key] !== null,
-    );
-    const tags = fields.map(([key, label]) => boolTag(label, helper[key]));
+    const fields = FOOD_FIELDS.filter(([key]) => helper[key]);
+    const tags = fields.map(([, label]) => boolTag(label));
 
     const notes = [helper.dietary_restrictions, helper.food_handling_other].filter(
       Boolean,
