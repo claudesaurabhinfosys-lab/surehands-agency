@@ -185,7 +185,8 @@
     }
 
     async function loadPage(targetPage) {
-      const { items, currentPage, hasMore } = await fetchHelpersPage(targetPage);
+      const { items, currentPage, hasMore } =
+        await fetchHelpersPage(targetPage);
 
       items.forEach((helper) => {
         grid.appendChild(createHelperCard(helper));
@@ -238,8 +239,12 @@
   }
 
   function buildFactsHTML(helper) {
-    const facts = FACT_FIELDS.filter(([key]) => helper[key]).map(([key, label]) =>
-      fact(label, key === "age" ? `${helper.age} yrs` : formatLabel(helper[key])),
+    const facts = FACT_FIELDS.filter(([key]) => helper[key]).map(
+      ([key, label]) =>
+        fact(
+          label,
+          key === "age" ? `${helper.age} yrs` : formatLabel(helper[key]),
+        ),
     );
 
     if (typeof helper.years_experience === "number") {
@@ -264,6 +269,7 @@
     ["able_to_sew", "Sewing"],
     ["willing_wash_car", "Willing to wash car"],
     ["willing_work_with_another_helper", "Works with another helper"],
+    ["able_to_handle_beef", "Can cook beef"],
   ];
 
   const FOOD_FIELDS = [
@@ -278,34 +284,22 @@
   }
 
   function buildAbilitiesHTML(helper) {
-    const fields = ABILITY_FIELDS.filter(([key]) => helper[key]);
-    if (!fields.length) return "";
+    const fields = ABILITY_FIELDS.map(([key, label]) => ({
+      key,
+      label,
+      value: helper[key],
+    }));
 
-    const tags = fields.map(([, label]) => boolTag(label));
-
-    return `
-      <div class="helper-detail__section">
-        <h2 class="helper-detail__section-title">Additional Abilities</h2>
-        <div class="helper-detail__tags">${tags.join("")}</div>
-      </div>
-    `;
-  }
-
-  function buildDietaryHTML(helper) {
-    const fields = FOOD_FIELDS.filter(([key]) => helper[key]);
-    const tags = fields.map(([, label]) => boolTag(label));
-
-    const notes = [helper.dietary_restrictions, helper.food_handling_other].filter(
-      Boolean,
+    const tags = fields.map(
+      (f) => `
+      <span class="helper-detail__tag ${f.value ? "helper-detail__tag--yes" : "helper-detail__tag--no"}">${f.label}</span>
+    `,
     );
 
-    if (!tags.length && !notes.length) return "";
-
     return `
       <div class="helper-detail__section">
-        <h2 class="helper-detail__section-title">Dietary &amp; Food Handling</h2>
-        ${tags.length ? `<div class="helper-detail__tags mb-4">${tags.join("")}</div>` : ""}
-        ${notes.map((n) => `<p class="helper-detail__note">${n}</p>`).join("")}
+        <h2 class="helper-detail__section-title">Other Information</h2>
+        <div class="helper-detail__tags">${tags.join("")}</div>
       </div>
     `;
   }
@@ -354,7 +348,10 @@
 
     const items = sorted
       .map((h) => {
-        const dateRange = [formatDate(h.from_date), formatDate(h.to_date) || "Present"]
+        const dateRange = [
+          formatDate(h.from_date),
+          formatDate(h.to_date) || "Present",
+        ]
           .filter(Boolean)
           .join(" – ");
         const meta = [
@@ -485,7 +482,6 @@
 
       ${buildAssessmentsHTML(helper.skill_assessments)}
       ${buildAbilitiesHTML(helper)}
-      ${buildDietaryHTML(helper)}
       ${buildEmploymentHistoryHTML(helper.employment_histories)}
       ${buildVideoInterviewsHTML(helper.video_interviews)}
     `;
