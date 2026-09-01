@@ -409,8 +409,8 @@
       .join("");
 
     return `
-      <div class="helper-detail__section">
-        <h2 class="helper-detail__section-title">Video Interview</h2>
+      <div id="video-interview" class="helper-detail__section" style="scroll-margin-top:96px">
+        <h2 class="helper-detail__section-title">Interview Videos</h2>
         <div class="helper-detail__video-grid">${cards}</div>
       </div>
     `;
@@ -445,6 +445,9 @@
     const photoUrl = getPhotoUrl(helper);
     const name = helper.name || "Helper";
     const status = "Available";
+    const hasVideoInterviews = Array.isArray(helper.video_interviews)
+      ? helper.video_interviews.length > 0
+      : false;
 
     container.innerHTML = `
       <a href="index.html#helpers" class="helper-detail__back">
@@ -472,6 +475,14 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
             Share ${name.split(" ")[0]}'s Profile
           </button>
+          ${
+            hasVideoInterviews
+              ? `<a href="#video-interview" class="btn-share mt-6 sm:ml-3">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+           Watch Interview Videos
+          </a>`
+              : ""
+          }
         </div>
       </div>
 

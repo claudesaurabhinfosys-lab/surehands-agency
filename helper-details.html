@@ -57,6 +57,16 @@
     }
     .btn-share:hover { transform: translateY(-2px); background: #15274a; box-shadow: 0 18px 36px -14px rgba(29,52,97,.55); }
 
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 28px; border-radius: 999px;
+      background: #25D366; color: #fff;
+      font-weight: 600; font-size: 15px; text-decoration: none;
+      box-shadow: 0 12px 28px -12px rgba(37,211,102,.55);
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .btn-wa:hover { transform: translateY(-2px); background: #1FB855; box-shadow: 0 18px 36px -14px rgba(37,211,102,.6); }
+
     /* Nav */
     #nav { position: fixed; inset-x: 0; top: 0; z-index: 40; transition: all .5s; }
     #nav.scrolled { background: rgba(252,251,248,.9); backdrop-filter: saturate(180%) blur(16px); border-bottom: 1px solid #E4E8EF; }
@@ -140,7 +150,7 @@
 
     /* Helper card status badge (shared look) */
     .helper-card__status { padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 600; letter-spacing: .02em; text-transform: capitalize; }
-    .helper-card__status--available { background: rgba(37,211,102,.14); color: #1c9550; border: 1px solid rgba(37,211,102,.3); }
+    .helper-card__status--available { background: #1c9550; color: #fff; border: 1px solid #1c9550; }
     .helper-card__status--assigned  { background: rgba(201,166,107,.18); color: #8a6a2e; border: 1px solid rgba(201,166,107,.32); }
     .helper-card__status--default   { background: rgba(92,143,191,.14); color: #1D3461; border: 1px solid rgba(92,143,191,.28); }
     .helper-card__initials { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 3.5rem; color: #1D3461; opacity: .45; background: linear-gradient(135deg,#DCE8F3,#F5F1EA); }
