@@ -264,12 +264,13 @@
   }
 
   const ABILITY_FIELDS = [
-    ["able_to_care_pets", "Cares for pets"],
-    ["able_to_garden", "Gardening"],
-    ["able_to_sew", "Sewing"],
-    ["willing_wash_car", "Willing to wash car"],
-    ["willing_work_with_another_helper", "Works with another helper"],
-    ["able_to_handle_beef", "Can cook beef"],
+    ["able_to_care_pets", "Cares for pets", "hide_able_to_care_pets"],
+    ["able_to_garden", "Gardening", "hide_able_to_garden"],
+    ["able_to_sew", "Sewing", "hide_able_to_sew"],
+    ["willing_wash_car", "Willing to wash car", "hide_willing_wash_car"],
+    ["willing_work_with_another_helper", "Works with another helper", "hide_willing_work_with_another_helper"],
+    ["able_to_handle_beef", "Can cook beef", "hide_able_to_handle_beef"],
+    ["able_to_handle_pork", "Can cook pork", "hide_able_to_handle_pork"],
   ];
 
   const FOOD_FIELDS = [
@@ -284,11 +285,13 @@
   }
 
   function buildAbilitiesHTML(helper) {
-    const fields = ABILITY_FIELDS.map(([key, label]) => ({
-      key,
-      label,
-      value: helper[key],
-    }));
+    const fields = ABILITY_FIELDS
+      .filter(([, , hideKey]) => !helper[hideKey])
+      .map(([key, label]) => ({
+        key,
+        label,
+        value: helper[key],
+      }));
 
     const tags = fields.map(
       (f) => `
