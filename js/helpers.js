@@ -380,6 +380,8 @@
     `;
   }
 
+  let videoSwiper = null;
+
   function buildVideoInterviewsHTML(videos) {
     if (!videos || !videos.length) return "";
 
@@ -415,6 +417,114 @@
       </div>
     `;
   }
+
+  function buildVideoInterviewsModalHTML(videos) {
+    if (videoSwiper) {
+      videoSwiper.destroy(true, true);
+      videoSwiper = null;
+    }
+    if (!videos || !videos.length) return "";
+
+    const sorted = [...videos].sort(
+      (a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0),
+    );
+
+    const slides = sorted
+      .map(
+        (v) => `
+        <div class="swiper-slide">
+          <video
+            controls
+            preload="none"
+            ${v.thumbnail_url ? `poster="${v.thumbnail_url}"` : ""}
+            class="video-modal__video"
+          >
+            <source src="${v.video_url}" />
+          </video>
+          <div class="video-modal__caption">
+            <span>${v.title || "Interview"}</span>
+            ${v.interviewed_at ? `<span class="video-modal__date">${formatDate(v.interviewed_at)}</span>` : ""}
+          </div>
+        </div>
+      `,
+      )
+      .join("");
+
+    return `
+      <dialog id="video-modal" class="video-modal" aria-label="Interview Videos">
+        <div class="video-modal__head">
+          <h2 class="video-modal__title">Interview Videos</h2>
+          <button type="button" class="video-modal__close" onclick="closeVideoInterviews()" aria-label="Close">&times;</button>
+        </div>
+        <div class="video-modal__body">
+          <div class="swiper">
+            <div class="swiper-wrapper">${slides}</div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </dialog>
+    `;
+  }
+
+  function pauseAllModalVideos() {
+    document
+      .querySelectorAll("#video-modal video")
+      .forEach((vid) => vid.pause());
+  }
+
+  window.openVideoInterviews = function () {
+    const modal = document.getElementById("video-modal");
+    if (!modal) return;
+
+    if (typeof modal.showModal === "function") modal.showModal();
+    else modal.setAttribute("open", "");
+    document.body.classList.add("modal-open");
+
+    if (!modal.dataset.bound) {
+      modal.dataset.bound = "1";
+      modal.addEventListener("close", () => {
+        pauseAllModalVideos();
+        document.body.classList.remove("modal-open");
+      });
+      // click on the backdrop (outside the dialog box) closes it
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) modal.close();
+      });
+    }
+
+    if (typeof Swiper === "function") {
+      if (!videoSwiper) {
+        videoSwiper = new Swiper(modal.querySelector(".swiper"), {
+          slidesPerView: 1,
+          spaceBetween: 24,
+          navigation: {
+            nextEl: modal.querySelector(".swiper-button-next"),
+            prevEl: modal.querySelector(".swiper-button-prev"),
+          },
+          pagination: {
+            el: modal.querySelector(".swiper-pagination"),
+            clickable: true,
+          },
+        });
+        videoSwiper.on("slideChange", pauseAllModalVideos);
+      } else {
+        videoSwiper.update();
+      }
+    }
+  };
+
+  window.closeVideoInterviews = function () {
+    const modal = document.getElementById("video-modal");
+    if (!modal) return;
+    if (typeof modal.close === "function") modal.close();
+    else {
+      modal.removeAttribute("open");
+      pauseAllModalVideos();
+      document.body.classList.remove("modal-open");
+    }
+  };
 
   async function initHelperDetails() {
     const container = document.getElementById("helper-detail-content");
@@ -477,10 +587,10 @@
           </button>
           ${
             hasVideoInterviews
-              ? `<a href="#video-interview" class="btn-share mt-6 sm:ml-3">
+              ? `<button type="button" class="btn-share mt-6 sm:ml-3" onclick="openVideoInterviews()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-           Watch Interview Videos
-          </a>`
+            Interview Videos
+          </button>`
               : ""
           }
         </div>
@@ -495,6 +605,7 @@
       ${buildAbilitiesHTML(helper)}
       ${buildEmploymentHistoryHTML(helper.employment_histories)}
       ${buildVideoInterviewsHTML(helper.video_interviews)}
+      ${buildVideoInterviewsModalHTML(helper.video_interviews)}
     `;
   }
 

@@ -10,6 +10,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -131,6 +133,33 @@
     .helper-detail__video { display: block; width: 100%; aspect-ratio: 16/9; background: #1B2230; }
     .helper-detail__video-caption { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 16px; font-size: 13px; font-weight: 500; color: #1B2230; }
     .helper-detail__video-date { font-size: 12px; font-weight: 500; color: #8B95A8; }
+
+    /* Interview Videos modal (native <dialog>) */
+    .video-modal {
+      width: 100%; max-width: 720px; max-height: 90vh; padding: 0; overflow: hidden;
+      border: none; border-radius: 24px; background: #fff;
+      box-shadow: 0 40px 90px -30px rgba(15,20,32,.6);
+    }
+    .video-modal[open] { display: flex; flex-direction: column; animation: video-modal-in .3s cubic-bezier(.2,.7,.2,1); }
+    .video-modal::backdrop { background: rgba(15,20,32,.72); backdrop-filter: blur(4px); }
+    @keyframes video-modal-in { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
+    .video-modal__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid #E4E8EF; }
+    .video-modal__title { font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.35rem; color: #1B2230; }
+    .video-modal__close {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 999px; border: 1px solid #E4E8EF;
+      background: #FCFBF8; color: #4D5668; font-size: 20px; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: background .2s ease, color .2s ease;
+    }
+    .video-modal__close:hover { background: #F5F1EA; color: #1B2230; }
+    .video-modal__body { padding: 24px; overflow: hidden; }
+    .video-modal .swiper { width: 100%; padding-bottom: 36px; }
+    .video-modal__video { display: block; width: 100%; aspect-ratio: 16/9; background: #1B2230; border-radius: 16px; }
+    .video-modal__caption { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; font-size: 14px; font-weight: 500; color: #1B2230; }
+    .video-modal__date { font-size: 12.5px; font-weight: 500; color: #8B95A8; }
+    .video-modal .swiper-button-prev, .video-modal .swiper-button-next { color: #1D3461; }
+    .video-modal .swiper-button-prev::after, .video-modal .swiper-button-next::after { font-size: 22px; font-weight: 700; }
+    .video-modal .swiper-pagination-bullet-active { background: #1D3461; }
+    body.modal-open { overflow: hidden; }
 
     /* Skeleton */
     .helper-detail-skeleton { padding: 2rem 0; }
@@ -296,6 +325,7 @@
     }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="js/helpers.js"></script>
   <script>
     if (typeof initHelperDetails === 'function') initHelperDetails();
