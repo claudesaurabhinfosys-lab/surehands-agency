@@ -36,15 +36,18 @@
 
   function createReviewCard(review, index) {
     const delay = index % 3 === 1 ? " d1" : index % 3 === 2 ? " d2" : "";
-    const name = review.name || review.customer_name || "Anonymous";
+    const name =
+      review.user_name || review.name || review.customer_name || "Anonymous";
     const description =
-      review.description || review.comment || review.review || "";
+      review.review || review.caption || review.description || review.comment || "";
     const imageUrl = review.image_url || "";
+    const subtitle =
+      review.outlet_name || review.category_name || review.location || "";
 
     const card = document.createElement("figure");
     card.className = "soft-card p-8 reveal" + delay;
     card.innerHTML = `
-      <div class="text-warm tracking-wider">${renderStars(review.rating || 5)}</div>
+      <div class="text-warm tracking-wider">${renderStars(review.rating ?? 5)}</div>
       <blockquote
         style="font-family: &quot;Fraunces&quot;, serif"
         class="text-xl mt-5 leading-snug"
@@ -59,7 +62,7 @@
         }
         <div>
           <div class="text-sm font-semibold">${name}</div>
-          <div class="text-xs text-mist">${review.category_name || review.location || ""}</div>
+          <div class="text-xs text-mist">${subtitle}</div>
         </div>
       </figcaption>
     `;
