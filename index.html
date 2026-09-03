@@ -2102,134 +2102,8 @@
             <span class="text-sm text-slate">4.9 average · Google reviews</span>
           </div>
         </div>
-        <div class="grid md:grid-cols-3 gap-6">
-          <figure class="soft-card p-8 reveal">
-            <div class="text-warm tracking-wider">★ ★ ★ ★ ★</div>
-            <blockquote
-              style="font-family: &quot;Fraunces&quot;, serif"
-              class="text-xl mt-5 leading-snug"
-            >
-              "They didn't try to sell us anyone. They actually listened, then
-              waited two weeks for someone who fit my mum's care needs. She's
-              been with us 18 months now."
-            </blockquote>
-            <figcaption class="mt-6 flex items-center gap-3">
-              <span
-                class="w-10 h-10 rounded-full bg-soft text-deep grid place-items-center font-bold"
-                >J</span
-              >
-              <div>
-                <div class="text-sm font-semibold">Jeremy &amp; Hui Min</div>
-                <div class="text-xs text-mist">Eldercare · Bishan</div>
-              </div>
-            </figcaption>
-          </figure>
-          <figure class="soft-card p-8 reveal d1">
-            <div class="text-warm tracking-wider">★ ★ ★ ★ ★</div>
-            <blockquote
-              style="font-family: &quot;Fraunces&quot;, serif"
-              class="text-xl mt-5 leading-snug"
-            >
-              "First-time employers and we were nervous. SureHands walked us
-              through everything — costs, paperwork, even how to set house
-              rules. Felt cared for the whole way."
-            </blockquote>
-            <figcaption class="mt-6 flex items-center gap-3">
-              <span
-                class="w-10 h-10 rounded-full bg-soft text-deep grid place-items-center font-bold"
-                >N</span
-              >
-              <div>
-                <div class="text-sm font-semibold">Nadia &amp; Faisal</div>
-                <div class="text-xs text-mist">Newborn family · Punggol</div>
-              </div>
-            </figcaption>
-          </figure>
-          <figure class="soft-card p-8 reveal d2">
-            <div class="text-warm tracking-wider">★ ★ ★ ★ ★</div>
-            <blockquote
-              style="font-family: &quot;Fraunces&quot;, serif"
-              class="text-xl mt-5 leading-snug"
-            >
-              "What stood out was the aftercare. Six months in, they still check
-              in to see how our helper and our family are getting along. That's
-              not normal in this industry."
-            </blockquote>
-            <figcaption class="mt-6 flex items-center gap-3">
-              <span
-                class="w-10 h-10 rounded-full bg-soft text-deep grid place-items-center font-bold"
-                >P</span
-              >
-              <div>
-                <div class="text-sm font-semibold">Priya R.</div>
-                <div class="text-xs text-mist">Working couple · Tampines</div>
-              </div>
-            </figcaption>
-          </figure>
-          <figure class="soft-card p-8 reveal">
-            <div class="text-warm tracking-wider">★ ★ ★ ★ ★</div>
-            <blockquote
-              style="font-family: &quot;Fraunces&quot;, serif"
-              class="text-xl mt-5 leading-snug"
-            >
-              "Our previous transfer didn't work out and we were exhausted.
-              SureHands helped us regroup, sat with us patiently, and re-matched
-              us. Night and day difference."
-            </blockquote>
-            <figcaption class="mt-6 flex items-center gap-3">
-              <span
-                class="w-10 h-10 rounded-full bg-soft text-deep grid place-items-center font-bold"
-                >L</span
-              >
-              <div>
-                <div class="text-sm font-semibold">Lim Family</div>
-                <div class="text-xs text-mist">Transfer match · Sengkang</div>
-              </div>
-            </figcaption>
-          </figure>
-          <figure class="soft-card p-8 reveal d1">
-            <div class="text-warm tracking-wider">★ ★ ★ ★ ★</div>
-            <blockquote
-              style="font-family: &quot;Fraunces&quot;, serif"
-              class="text-xl mt-5 leading-snug"
-            >
-              "They told me honestly that one candidate I liked wasn't right for
-              us. I appreciated that — most agencies would just close the deal.
-              We ended up with someone perfect."
-            </blockquote>
-            <figcaption class="mt-6 flex items-center gap-3">
-              <span
-                class="w-10 h-10 rounded-full bg-soft text-deep grid place-items-center font-bold"
-                >A</span
-              >
-              <div>
-                <div class="text-sm font-semibold">Aisyah K.</div>
-                <div class="text-xs text-mist">Twin toddlers · Woodlands</div>
-              </div>
-            </figcaption>
-          </figure>
-          <figure class="soft-card p-8 reveal d2">
-            <div class="text-warm tracking-wider">★ ★ ★ ★ ★</div>
-            <blockquote
-              style="font-family: &quot;Fraunces&quot;, serif"
-              class="text-xl mt-5 leading-snug"
-            >
-              "Renewal handled smoothly, paperwork done early, and they reminded
-              us about every deadline. Just calm, professional service from
-              start to finish."
-            </blockquote>
-            <figcaption class="mt-6 flex items-center gap-3">
-              <span
-                class="w-10 h-10 rounded-full bg-soft text-deep grid place-items-center font-bold"
-                >M</span
-              >
-              <div>
-                <div class="text-sm font-semibold">Mr &amp; Mrs Tan</div>
-                <div class="text-xs text-mist">Renewal · Bedok</div>
-              </div>
-            </figcaption>
-          </figure>
-        </div>
+        <!-- Dynamic reviews grid - populated by reviews.js (API reviews first, then hardcoded fallback) -->
+        <div id="reviews-grid" class="grid md:grid-cols-3 gap-6"></div>
       </div>
     </section>
 
@@ -2706,6 +2580,11 @@
         { threshold: 0.08, rootMargin: "0px 0px -40px 0px" },
       );
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+    </script>
+
+    <script src="js/reviews.js"></script>
+    <script>
+      if (typeof initReviewsSection === "function") initReviewsSection();
     </script>
 
     <script src="js/blogs.js"></script>
