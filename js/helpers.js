@@ -529,8 +529,15 @@
     }
   };
 
-  function buildAppointmentModalHTML(name) {
-    const waMsg = encodeURIComponent(`Hi SureHands, I'd like to book an appointment with ${name}.`);
+  function buildAppointmentModalHTML(helper) {
+    const name = helper.name || "Helper";
+    const details = [
+      helper.nationality ? `Nationality: ${formatLabel(helper.nationality)}` : "",
+      helper.gender ? `Gender: ${formatLabel(helper.gender)}` : "",
+      typeof helper.years_experience === "number" ? `Experience: ${helper.years_experience} year${helper.years_experience === 1 ? "" : "s"}` : "",
+      helper.skills ? `Skills: ${helper.skills}` : "",
+    ].filter(Boolean).join("%0A");
+    const waMsg = encodeURIComponent(`Hi SureHands, I'd like to book an appointment with ${name}.`) + (details ? "%0A%0A" + details : "");
     return `
       <dialog id="appt-modal" class="appt-modal" aria-label="Book Appointment">
         <div class="appt-modal__head">
@@ -676,7 +683,7 @@
       ${buildEmploymentHistoryHTML(helper.employment_histories)}
       ${buildVideoInterviewsHTML(helper.video_interviews)}
       ${buildVideoInterviewsModalHTML(helper.video_interviews)}
-      ${buildAppointmentModalHTML(name)}
+      ${buildAppointmentModalHTML(helper)}
     `;
   }
 
