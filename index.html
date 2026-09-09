@@ -571,7 +571,10 @@
         letter-spacing: 0.01em;
         border: none;
         cursor: pointer;
-        transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        transition:
+          background 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
         box-shadow: 0 12px 30px -12px rgba(29, 52, 97, 0.45);
       }
       .helpers-load-more:hover:not(:disabled) {
@@ -592,8 +595,14 @@
         animation: helpers-spin 0.7s linear infinite;
         display: none;
       }
-      .helpers-load-more.is-loading .helpers-load-more__spinner { display: inline-block; }
-      @keyframes helpers-spin { to { transform: rotate(360deg); } }
+      .helpers-load-more.is-loading .helpers-load-more__spinner {
+        display: inline-block;
+      }
+      @keyframes helpers-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
 
       /* Skeleton */
       .blog-skeleton-card {
@@ -1289,13 +1298,18 @@
     </section>
 
     <!-- ===== AVAILABLE HELPERS ===== -->
-    <section id="helpers" class="py-24 md:py-32 bg-cream/60 border-y border-line">
+    <section
+      id="helpers"
+      class="py-24 md:py-32 bg-cream/60 border-y border-line"
+    >
       <div class="max-w-7xl mx-auto px-5 md:px-10">
         <div
           class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14"
         >
           <div class="reveal max-w-2xl">
-            <span class="eyebrow"><span class="dot"></span> Meet Our Helpers</span>
+            <span class="eyebrow"
+              ><span class="dot"></span> Meet Our Helpers</span
+            >
             <h2
               style="font-family: &quot;Fraunces&quot;, serif; font-weight: 300"
               class="text-4xl md:text-6xl leading-[1.05] mt-5"
@@ -1310,10 +1324,7 @@
           </p>
         </div>
 
-        <div
-          id="helpers-grid"
-          class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
+        <div id="helpers-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Helper cards injected by JS -->
         </div>
 
@@ -2316,7 +2327,7 @@
 
     <!-- ===== FINAL CTA ===== -->
     <section class="py-24 md:py-32">
-      <div class="max-w-5xl mx-auto px-5 md:px-10">
+      <div class="max-w-6xl mx-auto px-5 md:px-10">
         <div
           class="relative rounded-[36px] overflow-hidden p-10 md:p-16 reveal"
           style="background: linear-gradient(135deg, #1d3461 0%, #2e5a86 100%)"
@@ -2330,7 +2341,7 @@
             style="background: rgba(201, 166, 107, 0.12); filter: blur(60px)"
           ></div>
           <div class="relative grid md:grid-cols-12 gap-10 items-center">
-            <div class="md:col-span-8">
+            <div class="md:col-span-7">
               <span
                 class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs tracking-[.14em] uppercase font-medium"
                 style="
@@ -2374,7 +2385,7 @@
                 <span>📍 Singapore · Island-wide</span>
               </div>
             </div>
-            <div class="md:col-span-4 flex md:justify-end">
+            <div class="md:col-span-5 flex md:justify-end">
               <a
                 href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
                 class="btn-wa !py-5 !px-8 !text-base"

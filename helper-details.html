@@ -161,6 +161,50 @@
     .video-modal .swiper-pagination-bullet-active { background: #1D3461; }
     body.modal-open { overflow: hidden; }
 
+    /* Book Appointment modal */
+    .appt-modal {
+      width: 100%; max-width: 480px; max-height: 90vh; padding: 0; overflow: hidden;
+      border: none; border-radius: 24px; background: #fff;
+      box-shadow: 0 40px 90px -30px rgba(15,20,32,.6);
+    }
+    .appt-modal[open] { display: flex; flex-direction: column; animation: video-modal-in .3s cubic-bezier(.2,.7,.2,1); }
+    .appt-modal::backdrop { background: rgba(15,20,32,.72); backdrop-filter: blur(4px); }
+    .appt-modal__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; border-bottom: 1px solid #E4E8EF; }
+    .appt-modal__title { font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.35rem; color: #1B2230; }
+    .appt-modal__close {
+      flex-shrink: 0; width: 36px; height: 36px; border-radius: 999px; border: 1px solid #E4E8EF;
+      background: #FCFBF8; color: #4D5668; font-size: 20px; line-height: 1; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; transition: background .2s ease, color .2s ease;
+    }
+    .appt-modal__close:hover { background: #F5F1EA; color: #1B2230; }
+    .appt-modal__body { padding: 24px; }
+
+    .appt-modal__label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: .12em; color: #8B95A8; margin-bottom: 12px;
+    }
+    .appt-modal__section + .appt-modal__section { margin-top: 20px; padding-top: 20px; border-top: 1px solid #E4E8EF; }
+
+    .appt-modal__btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; padding: 13px 20px; border-radius: 999px;
+      background: #25D366; color: #fff; border: none; cursor: pointer;
+      font-weight: 600; font-size: 14px; text-decoration: none;
+      box-shadow: 0 10px 24px -10px rgba(37,211,102,.45);
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .appt-modal__btn-wa:hover { transform: translateY(-2px); background: #1FB855; box-shadow: 0 16px 32px -12px rgba(37,211,102,.55); }
+
+    .appt-modal__btn-app {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      flex: 1; padding: 13px 16px; border-radius: 999px;
+      background: #1D3461; color: #fff; border: none; cursor: pointer;
+      font-weight: 600; font-size: 13px; text-decoration: none;
+      box-shadow: 0 10px 24px -10px rgba(29,52,97,.35);
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+    .appt-modal__btn-app:hover { transform: translateY(-2px); background: #15274a; box-shadow: 0 16px 32px -12px rgba(29,52,97,.45); }
+
     /* Skeleton */
     .helper-detail-skeleton { padding: 2rem 0; }
     .helper-detail-skeleton__row { display: grid; gap: 40px; margin-bottom: 40px; }
