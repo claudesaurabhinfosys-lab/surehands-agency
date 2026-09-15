@@ -328,17 +328,74 @@
       }
 
       .hero-bg {
+        position: relative;
+        background: #0f1a2e;
+      }
+      .hero-video-wrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      .hero-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+      }
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
         background:
-          radial-gradient(
-            700px 400px at 85% 10%,
-            rgba(220, 232, 243, 0.65),
-            transparent 60%
-          ),
-          radial-gradient(
-            600px 360px at 0% 90%,
-            rgba(245, 241, 234, 0.85),
-            transparent 60%
+          linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.7) 0%,
+            rgba(0, 0, 0, 0.55) 35%,
+            rgba(0, 0, 0, 0.25) 65%,
+            rgba(0, 0, 0, 0.1) 100%
           );
+      }
+      .hero-overlay::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 3;
+      }
+      .hero-overlay::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        background-size: 128px 128px;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      @media (max-width: 768px) {
+        .hero-overlay {
+          background:
+            linear-gradient(
+              to bottom,
+              rgba(0, 0, 0, 0.65) 0%,
+              rgba(0, 0, 0, 0.5) 40%,
+              rgba(0, 0, 0, 0.6) 100%
+            );
+        }
+        .hero-overlay::before {
+          background: rgba(0, 0, 0, 0.25);
+        }
+      }
+      .hero-content {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        padding: 20% 0;
       }
 
       @keyframes pulse-ring {
@@ -356,11 +413,21 @@
         animation: pulse-ring 2.4s cubic-bezier(0.66, 0, 0, 1) infinite;
       }
 
+      #nav {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: saturate(120%) blur(8px);
+      }
       #nav.scrolled {
-        background: rgba(252, 251, 248, 0.9);
+        background: rgba(252, 251, 248, 0.95);
         backdrop-filter: saturate(180%) blur(16px);
         border-bottom: 1px solid #e4e8ef;
       }
+      #nav.scrolled .ulink { color: #5c6b84; }
+      #nav.scrolled .ulink:hover { color: #1b2230; }
+      #nav.scrolled nav { color: #5c6b84; }
+      #nav.scrolled .logo-text { color: #1b2230; }
+      #nav.scrolled .logo-accent { color: #1d3461; }
+      #nav.scrolled .logo-sub { color: #5c6b84; }
 
       .ulink {
         position: relative;
@@ -915,39 +982,39 @@
             <div class="leading-tight">
               <div
                 style="font-family: &quot;Fraunces&quot;, serif"
-                class="text-xl text-ink tracking-tight"
+                class="logo-text text-xl text-white tracking-tight"
               >
                 SureHands
-                <span class="italic font-light text-deep">Agency</span>
+                <span class="italic font-light logo-accent text-warm">Agency</span>
               </div>
-              <div class="text-[10px] tracking-[.18em] uppercase text-mist">
+              <div class="logo-sub text-[10px] tracking-[.18em] uppercase text-white/60">
                 Caring Hands, Trusted Care
               </div>
             </div>
           </div>
         </a>
-        <nav class="hidden md:flex items-center gap-7 text-sm text-slate">
-          <a href="#about" class="ulink hover:text-ink transition-colors"
+        <nav class="hidden md:flex items-center gap-7 text-sm text-white/80">
+          <a href="#about" class="ulink hover:text-white transition-colors"
             >About</a
           >
-          <a href="#services" class="ulink hover:text-ink transition-colors"
+          <a href="#services" class="ulink hover:text-white transition-colors"
             >Services</a
           >
-          <a href="#helpers" class="ulink hover:text-ink transition-colors"
+          <a href="#helpers" class="ulink hover:text-white transition-colors"
             >Helpers</a
           >
-          <a href="#pricing" class="ulink hover:text-ink transition-colors"
+          <a href="#pricing" class="ulink hover:text-white transition-colors"
             >Pricing</a
           >
-          <a href="#process" class="ulink hover:text-ink transition-colors"
+          <a href="#process" class="ulink hover:text-white transition-colors"
             >Process</a
           >
-          <a href="#reviews" class="ulink hover:text-ink transition-colors"
+          <a href="#reviews" class="ulink hover:text-white transition-colors"
             >Reviews</a
           >
-          <a href="#faq" class="ulink hover:text-ink transition-colors">FAQ</a>
-          <a href="#contact" class="ulink hover:text-ink transition-colors">Contact</a>
-          <a href="blog.html" class="ulink hover:text-ink transition-colors"
+          <a href="#faq" class="ulink hover:text-white transition-colors">FAQ</a>
+          <a href="#contact" class="ulink hover:text-white transition-colors">Contact</a>
+          <a href="blog.html" class="ulink hover:text-white transition-colors"
             >Blog</a
           >
         </nav>
@@ -968,169 +1035,105 @@
     <!-- ===== HERO ===== -->
     <section
       id="top"
-      class="relative pt-28 md:pt-36 pb-20 md:pb-28 hero-bg overflow-hidden"
+      class="relative hero-bg overflow-hidden"
     >
-      <div class="max-w-7xl mx-auto px-5 md:px-10 relative">
-        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <div>
-            <div class="reveal">
-              <span class="eyebrow"
-                ><span class="dot"></span> Singapore · MOM-Licensed Maid
-                Agency</span
-              >
-            </div>
-            <h1
-              class="reveal d1 mt-6"
-              style="
-                font-family: &quot;Fraunces&quot;, serif;
-                font-weight: 300;
-                font-size: clamp(2.6rem, 6vw, 5rem);
-                line-height: 1.05;
-                letter-spacing: -0.01em;
-              "
-            >
-              Finding the right help<br />
-              for your family,<br />
-              <span class="italic text-deep">the right way.</span>
-            </h1>
-            <p
-              class="reveal d2 mt-6 text-lg text-slate leading-relaxed max-w-lg"
-            >
-              A sincere maid agency built on honest guidance, careful matching,
-              and long-term aftercare — so you bring the right person home, and
-              feel supported long after they arrive.
-            </p>
-            <div class="reveal d3 mt-8 flex flex-wrap gap-3">
-              <a
-                href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
-                class="btn-wa"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M19.05 4.91A10 10 0 0 0 4.9 19.06L4 23l4.07-1.06A10 10 0 1 0 19.05 4.91Zm-7.05 16a8 8 0 0 1-4.07-1.12l-.29-.17-2.4.63.64-2.34-.19-.3A8 8 0 1 1 12 20.91Zm4.4-5.96c-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.36.1-.48.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"
-                  />
-                </svg>
-                Speak to Us on WhatsApp
-              </a>
-              <a href="#process" class="btn-ghost">
-                How we match
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                >
-                  <path
-                    d="M5 12h14M13 6l6 6-6 6"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </a>
-              <a
-                id="heroWatchVideoBtn"
-                href="#reviews"
-                class="btn-ghost !bg-white/90 hover:!bg-white text-deep font-semibold shadow-sm"
-              >
-                <span
-                  class="w-5 h-5 rounded-full bg-deep text-white flex items-center justify-center shrink-0"
-                >
-                  <svg
-                    class="w-2.5 h-2.5 fill-current translate-x-0.5"
-                    viewBox="0 0 24 24"
-                  >
-                    <polygon points="5 3 19 12 5 21 5 3" />
-                  </svg>
-                </span>
-                Watch Client Story 
-              </a>
-            </div>
-            <div class="reveal d4 mt-10 grid grid-cols-3 gap-5 max-w-sm">
-              <div class="text-center">
-                <div class="num text-3xl text-deep">MOM</div>
-                <div class="text-xs uppercase tracking-[.14em] text-mist mt-1">
-                  Licensed
-                </div>
-              </div>
-              <div class="text-center">
-                <div class="num text-3xl text-deep">6 Mo.</div>
-                <div class="text-xs uppercase tracking-[.14em] text-mist mt-1">
-                  Guarantee
-                </div>
-              </div>
-              <div class="text-center">
-                <div class="num text-3xl text-deep">3×</div>
-                <div class="text-xs uppercase tracking-[.14em] text-mist mt-1">
-                  Replacements
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="hero-video-wrap">
+        <video
+          id="heroBgVideo"
+          class="hero-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        >
+          <source src="images/reviewVideo.mp4" type="video/mp4" />
+        </video>
+        <div class="hero-overlay"></div>
+      </div>
 
-          <div class="reveal d2 relative">
-            <div
-              class="rounded-[32px] overflow-hidden shadow-[0_40px_100px_-30px_rgba(29,52,97,.35)]"
+      <div class="hero-content max-w-7xl mx-auto px-5 md:px-10 w-full">
+        <div class="max-w-2xl">
+          <div class="reveal">
+            <span class="eyebrow !text-white/70 !bg-white/10 !border-white/15"
+              ><span class="dot !bg-warm"></span> Singapore · MOM-Licensed Maid
+              Agency</span
             >
-              <img
-                src="images/services-collage.jpg"
-                alt="SureHands domestic helpers caring for Singapore homes"
-                class="w-full object-cover"
-                loading="eager"
-              />
-            </div>
-            <div
-              class="absolute -left-5 bottom-12 bg-white rounded-2xl p-4 shadow-xl border border-line max-w-[200px]"
+          </div>
+          <h1
+            class="reveal d1 mt-6 !text-white"
+            style="
+              font-family: &quot;Fraunces&quot;, serif;
+              font-weight: 300;
+              font-size: clamp(2.6rem, 6vw, 5rem);
+              line-height: 1.05;
+              letter-spacing: -0.01em;
+            "
+          >
+            Finding the right help<br />
+            for your family,<br />
+            <span class="italic text-warm">the right way.</span>
+          </h1>
+          <p
+            class="reveal d2 mt-6 text-lg text-white/70 leading-relaxed max-w-lg"
+          >
+            A sincere maid agency built on honest guidance, careful matching,
+            and long-term aftercare — so you bring the right person home, and
+            feel supported long after they arrive.
+          </p>
+          <div class="reveal d3 mt-8 flex flex-wrap gap-3">
+            <a
+              href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
+              class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-warm hover:bg-warm/90 text-white font-semibold transition-all duration-300"
             >
-              <div
-                class="flex items-center gap-2 text-xs text-mist tracking-widest uppercase font-medium"
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="currentColor"
               >
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#1D3461"
-                  stroke-width="2.5"
-                >
-                  <path
-                    d="m5 12 5 5 9-11"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                Sincere matching
-              </div>
-              <div
-                style="font-family: &quot;Fraunces&quot;, serif"
-                class="text-sm mt-1.5 leading-snug"
+                <path
+                  d="M19.05 4.91A10 10 0 0 0 4.9 19.06L4 23l4.07-1.06A10 10 0 1 0 19.05 4.91Zm-7.05 16a8 8 0 0 1-4.07-1.12l-.29-.17-2.4.63.64-2.34-.19-.3A8 8 0 1 1 12 20.91Zm4.4-5.96c-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.36.1-.48.1-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.18 1.11.16 1.53.1.47-.07 1.43-.58 1.63-1.14.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28Z"
+                />
+              </svg>
+              Speak to Us on WhatsApp
+            </a>
+            <a href="#process" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/30 hover:border-white/60 text-white font-semibold transition-all duration-300">
+              How we match
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
               >
-                No rushing. We wait until it feels right.
-              </div>
+                <path
+                  d="M5 12h14M13 6l6 6-6 6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+          <div class="reveal d4 mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div class="flex items-center gap-2 text-white/60 text-sm">
+              <svg class="w-4 h-4 text-warm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              MOM Licensed
             </div>
-            <div
-              class="absolute -right-3 top-10 bg-white rounded-2xl p-4 shadow-xl border border-line"
-            >
-              <div class="flex items-center gap-3">
-                <span
-                  class="w-10 h-10 rounded-full bg-deep text-paper grid place-items-center text-xs font-bold"
-                  >6M</span
-                >
-                <div>
-                  <div class="text-xs text-mist tracking-widest uppercase">
-                    Guarantee
-                  </div>
-                  <div class="text-sm font-semibold text-ink">
-                    Up to 3 replacements
-                  </div>
-                </div>
-              </div>
+            <div class="flex items-center gap-2 text-white/60 text-sm">
+              <svg class="w-4 h-4 text-warm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              6 Mo. Guarantee
+            </div>
+            <div class="flex items-center gap-2 text-white/60 text-sm">
+              <svg class="w-4 h-4 text-warm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Up to 3 Replacements
             </div>
           </div>
         </div>
@@ -2305,24 +2308,6 @@
           </div>
         </div>
 
-        <!-- Video Section -->
-        <div class="reveal mb-16">
-          <div
-            class="relative rounded-3xl md:rounded-[32px] overflow-hidden bg-ink shadow-[0_24px_70px_-25px_rgba(29,52,97,0.22)] border border-line/40 aspect-video max-w-5xl mx-auto"
-          >
-            <video
-              id="featuredReviewVideo"
-              class="w-full h-full object-cover"
-              controls
-              playsinline
-              preload="metadata"
-            >
-              <source src="images/reviewVideo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-
         <div class="mb-6 flex items-center justify-between">
           <h3
             style="font-family: &quot;Fraunces&quot;, serif"
@@ -2836,16 +2821,6 @@
     <script src="js/reviews.js"></script>
     <script>
       if (typeof initReviewsSection === "function") initReviewsSection();
-
-      const heroWatchBtn = document.getElementById("heroWatchVideoBtn");
-      const reviewVideo = document.getElementById("featuredReviewVideo");
-      if (heroWatchBtn && reviewVideo) {
-        heroWatchBtn.addEventListener("click", () => {
-          setTimeout(() => {
-            reviewVideo.play().catch(() => {});
-          }, 600);
-        });
-      }
     </script>
 
     <script src="js/blogs.js"></script>
