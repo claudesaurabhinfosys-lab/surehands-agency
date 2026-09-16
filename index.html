@@ -330,13 +330,19 @@
       .hero-bg {
         position: relative;
         background: #0f1a2e;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
       }
       .hero-video-wrap {
-        position: relative;
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
-        min-height: 100vh;
         overflow: hidden;
+        pointer-events: none;
+        z-index: 1;
       }
       .hero-video {
         position: absolute;
@@ -344,12 +350,12 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        z-index: 1;
       }
       .hero-overlay {
         position: absolute;
         inset: 0;
         z-index: 2;
+        pointer-events: none;
         background:
           linear-gradient(
             to right,
@@ -365,6 +371,7 @@
         inset: 0;
         background: rgba(0, 0, 0, 0.3);
         z-index: 3;
+        pointer-events: none;
       }
       .hero-overlay::after {
         content: "";
@@ -390,12 +397,11 @@
         }
       }
       .hero-content {
-        position: absolute;
-        inset: 0;
+        position: relative;
         z-index: 10;
-        display: flex;
-        align-items: center;
-        padding: 20% 0;
+        width: 100%;
+        padding-top: 130px;
+        padding-bottom: 70px;
       }
 
       @keyframes pulse-ring {
@@ -1045,7 +1051,9 @@
           muted
           loop
           playsinline
+          webkit-playsinline
           preload="auto"
+          src="images/reviewVideo.mp4"
         >
           <source src="images/reviewVideo.mp4" type="video/mp4" />
         </video>
@@ -2850,5 +2858,51 @@
       if (typeof initHelpersSection === "function") initHelpersSection();
     </script>
     <script src="js/contact.js"></script>
+    <script>
+      // Hero Background Video iOS Mobile Autoplay & Fallback
+      (() => {
+        const video = document.getElementById("heroBgVideo");
+        if (!video) return;
+
+        // Force WebKit muted and inline properties
+        video.muted = true;
+        video.defaultMuted = true;
+        video.playsInline = true;
+        video.setAttribute("playsinline", "");
+        video.setAttribute("webkit-playsinline", "");
+
+        const playVideo = () => {
+          const promise = video.play();
+          if (promise !== undefined) {
+            promise.catch(() => {
+              // If autoplay is blocked (e.g. Low Power Mode on iOS), play on first user touch/scroll
+              const unlock = () => {
+                video.play().catch(() => {});
+                ["touchstart", "touchend", "click", "scroll"].forEach((evt) => {
+                  window.removeEventListener(evt, unlock);
+                });
+              };
+              ["touchstart", "touchend", "click", "scroll"].forEach((evt) => {
+                window.addEventListener(evt, unlock, { once: true, passive: true });
+              });
+            });
+          }
+        };
+
+        playVideo();
+
+        // Resume playback if returning from background tab/app
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden && video.paused) {
+            playVideo();
+          }
+        });
+        window.addEventListener("pageshow", () => {
+          if (video.paused) {
+            playVideo();
+          }
+        });
+      })();
+    </script>
   </body>
 </html>
