@@ -210,7 +210,9 @@
         font-size: 15px;
         outline: none;
         box-sizing: border-box;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
       }
       .sh-input:focus,
       .sh-field-group select:focus,
@@ -261,7 +263,9 @@
         border-radius: 999px;
         font-weight: 600;
         font-size: 15px;
-        transition: background 0.2s, transform 0.2s;
+        transition:
+          background 0.2s,
+          transform 0.2s;
         box-shadow: 0 10px 25px -10px rgba(29, 52, 97, 0.5);
       }
       .sh-submit-btn:hover {
@@ -316,7 +320,9 @@
         vertical-align: middle;
       }
       @keyframes shSpin {
-        to { transform: rotate(360deg); }
+        to {
+          transform: rotate(360deg);
+        }
       }
       @media (max-width: 640px) {
         .sh-form-grid {
@@ -335,6 +341,11 @@
         display: flex;
         align-items: center;
       }
+      @media (max-width: 640px) {
+        .hero-bg {
+          flex-direction: column;
+        }
+      }
       .hero-video-wrap {
         position: absolute;
         inset: 0;
@@ -343,6 +354,14 @@
         overflow: hidden;
         pointer-events: none;
         z-index: 1;
+      }
+      @media (max-width: 640px) {
+        .hero-video-wrap {
+          position: relative;
+          width: 100%;
+          height: auto; 
+          aspect-ratio: 16/9;
+        }
       }
       .hero-video {
         position: absolute;
@@ -356,14 +375,18 @@
         inset: 0;
         z-index: 2;
         pointer-events: none;
-        background:
-          linear-gradient(
-            to right,
-            rgba(0, 0, 0, 0.7) 0%,
-            rgba(0, 0, 0, 0.55) 35%,
-            rgba(0, 0, 0, 0.25) 65%,
-            rgba(0, 0, 0, 0.1) 100%
-          );
+        background: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(0, 0, 0, 0.55) 35%,
+          rgba(0, 0, 0, 0.25) 65%,
+          rgba(0, 0, 0, 0.1) 100%
+        );
+      }
+      @media (max-width: 640px) {
+        .hero-overlay {
+          display: none;
+        }
       }
       .hero-overlay::before {
         content: "";
@@ -384,13 +407,12 @@
       }
       @media (max-width: 768px) {
         .hero-overlay {
-          background:
-            linear-gradient(
-              to bottom,
-              rgba(0, 0, 0, 0.65) 0%,
-              rgba(0, 0, 0, 0.5) 40%,
-              rgba(0, 0, 0, 0.6) 100%
-            );
+          background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.65) 0%,
+            rgba(0, 0, 0, 0.5) 40%,
+            rgba(0, 0, 0, 0.6) 100%
+          );
         }
         .hero-overlay::before {
           background: rgba(0, 0, 0, 0.25);
@@ -402,6 +424,11 @@
         width: 100%;
         padding-top: 130px;
         padding-bottom: 70px;
+      }
+      @media (max-width: 640px) {
+        .hero-content {
+          padding-top: 70px;
+        }
       }
 
       @keyframes pulse-ring {
@@ -428,12 +455,24 @@
         backdrop-filter: saturate(180%) blur(16px);
         border-bottom: 1px solid #e4e8ef;
       }
-      #nav.scrolled .ulink { color: #5c6b84; }
-      #nav.scrolled .ulink:hover { color: #1b2230; }
-      #nav.scrolled nav { color: #5c6b84; }
-      #nav.scrolled .logo-text { color: #1b2230; }
-      #nav.scrolled .logo-accent { color: #1d3461; }
-      #nav.scrolled .logo-sub { color: #5c6b84; }
+      #nav.scrolled .ulink {
+        color: #5c6b84;
+      }
+      #nav.scrolled .ulink:hover {
+        color: #1b2230;
+      }
+      #nav.scrolled nav {
+        color: #5c6b84;
+      }
+      #nav.scrolled .logo-text {
+        color: #1b2230;
+      }
+      #nav.scrolled .logo-accent {
+        color: #1d3461;
+      }
+      #nav.scrolled .logo-sub {
+        color: #5c6b84;
+      }
 
       .ulink {
         position: relative;
@@ -899,19 +938,24 @@
       }
     </style>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-L5RBHLRHN7"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-L5RBHLRHN7"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-L5RBHLRHN7');
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-L5RBHLRHN7");
     </script>
   </head>
   <body>
     <!-- ===== NAV ===== -->
     <header
       id="nav"
-      class="fixed inset-x-0 top-0 z-40 transition-all duration-500"
+      class="sm:fixed inset-x-0 top-0 z-40 transition-all duration-500"
     >
       <div
         class="max-w-7xl mx-auto px-5 md:px-10 py-3 flex items-center justify-between"
@@ -991,9 +1035,13 @@
                 class="logo-text text-xl text-white tracking-tight"
               >
                 SureHands
-                <span class="italic font-light logo-accent text-warm">Agency</span>
+                <span class="italic font-light logo-accent text-warm"
+                  >Agency</span
+                >
               </div>
-              <div class="logo-sub text-[10px] tracking-[.18em] uppercase text-white/60">
+              <div
+                class="logo-sub text-[10px] tracking-[.18em] uppercase text-white/60"
+              >
                 Caring Hands, Trusted Care
               </div>
             </div>
@@ -1018,8 +1066,12 @@
           <a href="#reviews" class="ulink hover:text-white transition-colors"
             >Reviews</a
           >
-          <a href="#faq" class="ulink hover:text-white transition-colors">FAQ</a>
-          <a href="#contact" class="ulink hover:text-white transition-colors">Contact</a>
+          <a href="#faq" class="ulink hover:text-white transition-colors"
+            >FAQ</a
+          >
+          <a href="#contact" class="ulink hover:text-white transition-colors"
+            >Contact</a
+          >
           <a href="blog.html" class="ulink hover:text-white transition-colors"
             >Blog</a
           >
@@ -1039,10 +1091,7 @@
     </header>
 
     <!-- ===== HERO ===== -->
-    <section
-      id="top"
-      class="relative hero-bg overflow-hidden"
-    >
+    <section id="top" class="relative hero-bg overflow-hidden">
       <div class="hero-video-wrap">
         <video
           id="heroBgVideo"
@@ -1106,7 +1155,10 @@
               </svg>
               Speak to Us on WhatsApp
             </a>
-            <a href="#process" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/30 hover:border-white/60 text-white font-semibold transition-all duration-300">
+            <a
+              href="#process"
+              class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-white/30 hover:border-white/60 text-white font-semibold transition-all duration-300"
+            >
               How we match
               <svg
                 width="16"
@@ -1124,22 +1176,54 @@
               </svg>
             </a>
           </div>
-          <div class="reveal d4 mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <div
+            class="reveal d4 mt-10 flex flex-wrap items-center gap-x-6 gap-y-3"
+          >
             <div class="flex items-center gap-2 text-white/60 text-sm">
-              <svg class="w-4 h-4 text-warm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg
+                class="w-4 h-4 text-warm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  d="m5 12 5 5 9-11"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
               MOM Licensed
             </div>
             <div class="flex items-center gap-2 text-white/60 text-sm">
-              <svg class="w-4 h-4 text-warm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg
+                class="w-4 h-4 text-warm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  d="m5 12 5 5 9-11"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
               6 Mo. Guarantee
             </div>
             <div class="flex items-center gap-2 text-white/60 text-sm">
-              <svg class="w-4 h-4 text-warm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/>
+              <svg
+                class="w-4 h-4 text-warm"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path
+                  d="m5 12 5 5 9-11"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
               Up to 3 Replacements
             </div>
@@ -2640,14 +2724,26 @@
     </section>
 
     <!-- ===== ENQUIRY / CONTACT SECTION ===== -->
-    <section id="contact" class="py-20 md:py-28 bg-cream/40 border-t border-line">
+    <section
+      id="contact"
+      class="py-20 md:py-28 bg-cream/40 border-t border-line"
+    >
       <div class="max-w-3xl mx-auto px-5 md:px-10 text-center">
-        <span class="eyebrow"><span class="dot"></span> Consultation & Enquiries</span>
-        <h2 style="font-family: 'Fraunces', serif; font-weight: 300;" class="text-3xl md:text-5xl leading-tight mt-4 text-ink">
-          Speak with a <span class="italic text-deep">Matching Specialist.</span>
+        <span class="eyebrow"
+          ><span class="dot"></span> Consultation & Enquiries</span
+        >
+        <h2
+          style="font-family: &quot;Fraunces&quot;, serif; font-weight: 300"
+          class="text-3xl md:text-5xl leading-tight mt-4 text-ink"
+        >
+          Speak with a
+          <span class="italic text-deep">Matching Specialist.</span>
         </h2>
-        <p class="text-slate mt-4 text-base md:text-lg leading-relaxed max-w-xl mx-auto">
-          Tell us about your family's needs and caregiving preferences. We'll be in touch with thoughtful guidance.
+        <p
+          class="text-slate mt-4 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
+        >
+          Tell us about your family's needs and caregiving preferences. We'll be
+          in touch with thoughtful guidance.
         </p>
         <div id="surehandsContactContainer" class="mt-10 text-left"></div>
       </div>
@@ -2883,7 +2979,10 @@
                 });
               };
               ["touchstart", "touchend", "click", "scroll"].forEach((evt) => {
-                window.addEventListener(evt, unlock, { once: true, passive: true });
+                window.addEventListener(evt, unlock, {
+                  once: true,
+                  passive: true,
+                });
               });
             });
           }
