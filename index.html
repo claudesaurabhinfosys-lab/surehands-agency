@@ -2960,50 +2960,91 @@
     </script>
     <script src="js/contact.js"></script>
     <script>
-      // Hero Background Video iOS Mobile Autoplay & Fallback
+      // Hero background video autoplay with an iOS/Safari interaction fallback.
       (() => {
         const video = document.getElementById("heroBgVideo");
         if (!video) return;
 
-        // Force WebKit muted and inline properties
+        const interactionEvents = ["touchstart", "pointerdown", "click"];
+        let interactionListenersAttached = false;
+        let playAttempt = null;
+
         video.muted = true;
         video.defaultMuted = true;
         video.playsInline = true;
         video.setAttribute("playsinline", "");
         video.setAttribute("webkit-playsinline", "");
 
-        const playVideo = () => {
-          const promise = video.play();
-          if (promise !== undefined) {
-            promise.catch(() => {
-              // If autoplay is blocked (e.g. Low Power Mode on iOS), play on first user touch/scroll
-              const unlock = () => {
-                video.play().catch(() => {});
-                ["touchstart", "touchend", "click", "scroll"].forEach((evt) => {
-                  window.removeEventListener(evt, unlock);
-                });
-              };
-              ["touchstart", "touchend", "click", "scroll"].forEach((evt) => {
-                window.addEventListener(evt, unlock, {
-                  once: true,
-                  passive: true,
-                });
-              });
-            });
-          }
+        const removeInteractionListeners = () => {
+          if (!interactionListenersAttached) return;
+
+          interactionEvents.forEach((eventName) => {
+            document.removeEventListener(eventName, handleInteraction, true);
+          });
+          interactionListenersAttached = false;
         };
 
-        playVideo();
+        const addInteractionListeners = () => {
+          if (interactionListenersAttached) return;
 
-        // Resume playback if returning from background tab/app
+          interactionEvents.forEach((eventName) => {
+            document.addEventListener(eventName, handleInteraction, {
+              capture: true,
+              passive: true,
+            });
+          });
+          interactionListenersAttached = true;
+        };
+
+        const attemptPlayback = () => {
+          if (!video.paused) {
+            removeInteractionListeners();
+            return Promise.resolve(true);
+          }
+
+          if (playAttempt) return playAttempt;
+
+          video.muted = true;
+
+          try {
+            const result = video.play();
+            playAttempt = Promise.resolve(result)
+              .then(() => {
+                removeInteractionListeners();
+                return true;
+              })
+              .catch(() => {
+                addInteractionListeners();
+                return false;
+              })
+              .then((didPlay) => {
+                playAttempt = null;
+                return didPlay;
+              });
+          } catch (_error) {
+            addInteractionListeners();
+            return Promise.resolve(false);
+          }
+
+          return playAttempt;
+        };
+
+        function handleInteraction() {
+          void attemptPlayback();
+        }
+
+        video.addEventListener("playing", removeInteractionListeners);
+        void attemptPlayback();
+
         document.addEventListener("visibilitychange", () => {
           if (!document.hidden && video.paused) {
-            playVideo();
+            void attemptPlayback();
           }
         });
+
         window.addEventListener("pageshow", () => {
           if (video.paused) {
-            playVideo();
+            void attemptPlayback();
           }
         });
       })();
