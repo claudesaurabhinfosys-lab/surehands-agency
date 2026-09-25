@@ -267,6 +267,8 @@
     if (!item || typeof item !== "object") return null;
     const type = getString(item.type).toLowerCase();
     const id = getString(item.id);
+    const displayOn = getString(item.display_on).toLowerCase();
+    if (displayOn === "app") return null;
     const title = getString(item.title);
     const subtitle = getString(item.subtitle);
     const message = getString(item.message);
