@@ -192,9 +192,9 @@
         .notice-board-panel {
           width: auto;
           max-width: calc(100vw - 24px);
-          min-height: 80svh;
+          // min-height: 80svh;
           max-height: 80svh;
-          height: 80svh;
+          // height: 80svh;
         }
         .notice-board-image-content {
           aspect-ratio: 4 / 5;
