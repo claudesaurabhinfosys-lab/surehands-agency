@@ -1082,7 +1082,7 @@
           >
         </nav>
         <a
-          href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20find%20a%20helper%20for%20my%20family."
+          href="https://wa.me/?text=Hi%20SureHands%2C%20I%27d%20like%20to%20find%20a%20helper%20for%20my%20family."
           class="btn-wa !py-2.5 !px-5 !text-sm"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -1145,7 +1145,7 @@
           </p>
           <div class="reveal d3 mt-8 flex flex-wrap gap-3">
             <a
-              href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
+              href="https://wa.me/?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
               class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-warm hover:bg-warm/90 text-white font-semibold transition-all duration-300"
             >
               <svg
@@ -1334,7 +1334,7 @@
               </div>
             </div>
             <a
-              href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20know%20more."
+              href="https://wa.me/?text=Hi%20SureHands%2C%20I%27d%20like%20to%20know%20more."
               class="btn-wa mt-8 inline-flex"
             >
               <svg
@@ -1989,7 +1989,7 @@
         </div>
         <div class="text-center reveal">
           <a
-            href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20know%20more%20about%20your%20pricing."
+            href="https://wa.me/?text=Hi%20SureHands%2C%20I%27d%20like%20to%20know%20more%20about%20your%20pricing."
             class="btn-wa"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -2456,7 +2456,7 @@
               an hour during work hours.
             </p>
             <a
-              href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%20have%20a%20question."
+              href="https://wa.me/?text=Hi%20SureHands%2C%20I%20have%20a%20question."
               class="ulink inline-flex items-center gap-2 mt-6 text-ink font-semibold hover:text-deep transition-colors"
               >Ask on WhatsApp →</a
             >
@@ -2700,14 +2700,15 @@
                 class="mt-5 flex flex-wrap gap-6 text-sm"
                 style="color: rgba(255, 255, 255, 0.65)"
               >
-                <span>📞 +65 8807 1780</span>
+                <span data-brand-contact-item hidden>📞 <span data-brand-phone-text></span></span>
+                <span data-brand-contact-item hidden>✉️ <span data-brand-email-text></span></span>
                 <span>⏰ Mon–Sat · 9am–7pm</span>
-                <span>📍 Singapore · Island-wide</span>
+                <span data-brand-contact-item hidden>📍 <span data-brand-address-text></span></span>
               </div>
             </div>
             <div class="md:col-span-5 flex md:justify-end">
               <a
-                href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
+                href="https://wa.me/?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
                 class="btn-wa !py-5 !px-8 !text-base"
               >
                 <svg
@@ -2868,13 +2869,24 @@
               <li>
                 WhatsApp ·
                 <a
-                  href="https://wa.me/6588071780"
+                  href="https://wa.me/"
+                  data-brand-phone-label
                   class="hover:text-white transition-colors"
-                  >+65 8807 1780</a
+                ></a
                 >
               </li>
+              <li data-brand-contact-item hidden>
+                Email ·
+                <a
+                  href="mailto:"
+                  data-brand-email-label
+                  class="hover:text-white transition-colors"
+                ></a>
+              </li>
+              <li data-brand-contact-item hidden>
+                Address · <span data-brand-address-text></span>
+              </li>
               <li>Mon–Sat · 9am–7pm</li>
-              <li>Singapore · Island-wide</li>
               <li class="pt-3 text-xs" style="color: rgba(252, 251, 248, 0.4)">
                 MOM-Licensed Employment Agency
               </li>
@@ -2931,7 +2943,7 @@
 
     <!-- ===== STICKY WHATSAPP ===== -->
     <a
-      href="https://wa.me/6588071780?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
+      href="https://wa.me/?text=Hi%20SureHands%2C%20I%27d%20like%20to%20speak%20to%20someone%20about%20finding%20a%20helper."
       aria-label="Chat with SureHands on WhatsApp"
       class="fixed bottom-6 right-6 z-50"
     >
@@ -2989,6 +3001,7 @@
       if (typeof initBlogSection === "function") initBlogSection();
     </script>
 
+    <script src="js/brand-contact.js" data-brand-slug="sureHands"></script>
     <script src="js/helpers.js"></script>
     <script>
       if (typeof initHelpersSection === "function") initHelpersSection();
